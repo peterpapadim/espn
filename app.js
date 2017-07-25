@@ -1,5 +1,3 @@
-let store = {players: [], teams: []}
-
 $(document).ready(function() {
 
   $("#createTeam").on("submit", function(event){
@@ -15,61 +13,60 @@ $(document).ready(function() {
 
 
   $("#selectTeam").on("submit", function(event){
-    $("#teamInfo").children().remove()
+    $("#teamInfo").empty()
     event.preventDefault()
-    let selectedTeam = $("#teamsDropDown").val()
-    let teamObject = store.teams.filter(function(team){
-	     return team.name === selectedTeam
-    })[0]
-    $("#teamInfo").append(`<h2>${teamObject.name}</h2>`)
+    let selectedTeamName = $("#teamsDropDown").val()
+    let team = Team.findTeamByName(selectedTeamName)
+
+    render(`<h2>${team.name}</h2>`, $("#teamInfo"))
     $("#createPlayer").attr('style','display: block')
     $("#playerTable").attr('style','display: block')
-    loadTable(teamObject.id)
+    loadTable(team.id)
   })
 
 
 
   $("#createPlayer form").on("submit", function(event){
     event.preventDefault()
-    let selectedTeam = $("#teamsDropDown").val()
-    let teamObject = store.teams.filter(function(team){
-       return team.name === selectedTeam
-    })[0]
+    let selectedTeamName = $("#teamsDropDown").val()
+    let teamId = Team.findTeamByName(selectedTeamName).id
 
     let name = $("#p-name").val()
     let age = $("#p-age").val()
     let homeTown = $("#p-homeTown").val()
-    let newPlayer = new Player(name, age, homeTown, teamObject.id)
+    let newPlayer = new Player(name, age, homeTown, teamId)
 
     $("#p-name").val("")
     $("#p-age").val("")
     $("#p-homeTown").val("")
 
-    loadTable(teamObject.id)
+    loadTable(teamId)
   })
 
 })
 
   function loadDropDown(){
-    $("#teamsDropDown").children().remove()
+    $("#teamsDropDown").empty()
     store.teams.forEach(function(team){
-      $("#teamsDropDown").append(`<option>${team.name}</option>`)
+      render(`<option>${team.name}</option>`, $("#teamsDropDown"))
     })
   }
 
 
   function loadTable(teamId){
     $("#playerTable table td").remove()
-    let teamPlayers = store.players.filter(function(player){
-	       return player.teamId === teamId
-	  })
+    let teamPlayers = Player.teamPlayers(teamId)
 
     if (teamPlayers.length === 0){
-      alert("Selected team ha NO players! Add one below:")
+        alert("Selected team ha NO players! Add one below:")
     }
     else {
         teamPlayers.forEach(function(player){
-        $("#playerTable table").append(`<tr><td>${player.name}</td><td>${player.age}</td><td>${player.hometown}</td></tr>`)
+        render(`<tr><td>${player.name}</td><td>${player.age}</td><td>${player.hometown}</td></tr>`, $("#playerTable table"))
       })
     }
+  }
+
+  function render(html, into){
+    into.append(html)
   }

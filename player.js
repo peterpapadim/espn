@@ -11,6 +11,13 @@ function createPlayer(){
       this.id = ++playerId
       store.players.push(this)
     }
+
+    static teamPlayers(teamId){
+      return store.players.filter(function(player){
+  	       return player.teamId === teamId
+  	  })
+    }
+
   }
 }
 

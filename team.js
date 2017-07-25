@@ -9,7 +9,14 @@ function createTeam(){
       this.id = ++teamId
       store.teams.push(this)
     }
+
+    static findTeamByName(teamName){
+      return store.teams.filter(function(team){
+         return team.name === teamName
+      })[0]
+    }
   }
+
 }
 
 let Team = createTeam()
