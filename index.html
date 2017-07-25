@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+    <script src="team.js"></script>
+    <script src="player.js"></script>
+  </head>
+  <body>
+
+<div align="center">
+    <form id="createTeam">
+      <label>Add Team:</label>
+      <input id="name" type="text" placeholder="Team Name">
+      <input id="city" type="text" placeholder="Team City">
+      <input type="Submit" value="Create Team">
+    </form>
+</div><br><br>
+
+<div align="center">
+    <form id="selectTeam" action="index.html" method="post">
+        <label>Choose a Team:</label>
+        <select id="teamsDropDown"></select>
+        <input type="Submit" value="View Team Details"><br>
+    </form>
+</div><br><br>
+
+<div id="teamInfo" align="center">
+</div>
+
+<div align="center" id="createPlayer" style="display: none">
+    <form action="index.html" method="post">
+      <label>Add Player:</label>
+      <input id="p-name" type="text" placeholder="Player Name">
+      <input id="p-age" type="text" placeholder="Age">
+      <input id="p-homeTown" type="text" placeholder="Hometown">
+      <input type="Submit" value="Add Player">
+    </form>
+</div><br><br>
+
+<div align="center" id="playerTable" style="display: none">
+  <table>
+  <tr><th>Name</th><th>Age</th><th>Hometown</th></tr>
+</table>
+</div>
+
+
+  </body>
+</html>
